@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F3 | Mangalore Based GenZ Dressing Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Video Background */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .video-container video {
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+            filter: brightness(0.6);
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7) 100%);
+        }
+
+        /* Transparent Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 25px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 15px 50px;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: 5px;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .logo span {
+            color: #f0f0f0;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #ccc;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: #fff;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-icons a {
+            color: #fff;
+            font-size: 1.3rem;
+            transition: transform 0.3s, color 0.3s;
+        }
+
+        .nav-icons a:hover {
+            transform: translateY(-3px);
+            color: #ccc;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .main-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 12rem;
+            font-weight: 900;
+            letter-spacing: 15px;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+            line-height: 0.9;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: 8px;
+            margin-bottom: 30px;
+            color: #ddd;
+        }
+
+        .location {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: #bbb;
+            margin-bottom: 50px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .location::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 1px;
+            background-color: #fff;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .cta-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            letter-spacing: 4px;
+            padding: 15px 45px;
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 100px 50px;
+            background-color: rgba(0, 0, 0, 0.9);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .section-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 4rem;
+            letter-spacing: 5px;
+            margin-bottom: 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background-color: #fff;
+        }
+
+        /* Collections */
+        .collections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .collection-item {
+            position: relative;
+            overflow: hidden;
+            height: 400px;
+            border-radius: 5px;
+        }
+
+        .collection-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .collection-item:hover .collection-img {
+            transform: scale(1.05);
+        }
+
+        .collection-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+        }
+
+        .collection-name {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        /* About Section */
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            line-height: 1.8;
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+
+        .highlight {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #000;
+            padding: 70px 50px 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        .footer-links a {
+            display: block;
+            color: #aaa;
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        .contact-info p {
+            margin-bottom: 15px;
+            color: #aaa;
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-title {
+                font-size: 9rem;
+            }
+            
+            .nav-links {
+                gap: 25px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px 30px;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: rgba(0, 0, 0, 0.95);
+                flex-direction: column;
+                padding: 30px;
+                text-align: center;
+                gap: 25px;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .main-title {
+                font-size: 6rem;
+                letter-spacing: 10px;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+                letter-spacing: 5px;
+            }
+            
+            .section {
+                padding: 70px 30px;
+            }
+            
+            .section-title {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 4.5rem;
+                letter-spacing: 8px;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+                letter-spacing: 3px;
+            }
+            
+            .logo {
+                font-size: 2.2rem;
+            }
+            
+            nav {
+                padding: 15px 20px;
+            }
+            
+            .section {
+                padding: 50px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Video Background -->
+    <div class="video-container">
+        <video autoplay muted loop playsinline>
+            <source src="/SnapInsta.to_AQOEDf2WFchLkMXuvXbcKoNIjWEkPrNdASpjdP7MMXKvhJckvg3UszCycXKyIJvE_rfBATs7sMce4BnQZByZfyfDlWgo-ONn5_3TLDs_001.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="logo">F<span>3</span></div>
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <a href="#home">Home</a>
+            <a href="#collections">Collections</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="nav-icons">
+            <a href="#"><i class="fas fa-search"></i></a>
+            <a href="#"><i class="fas fa-shopping-bag"></i></a>
+            <a href="#"><i class="fas fa-user"></i></a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1 class="main-title">F3</h1>
+        <p class="subtitle">GENZ DRESSING SHOP</p>
+        <p class="location">MANGALORE BASED</p>
+        <a href="#collections" class="cta-button">EXPLORE COLLECTIONS</a>
+    </section>
+
+    <!-- Collections Section -->
+    <section class="section" id="collections">
+        <h2 class="section-title">NEW COLLECTIONS</h2>
+        <div class="collections-grid">
+            <div class="collection-item">
+                <img src="/Screenshot_20260115-170945_Instagram.jpg" alt="Streetwear Collection" class="collection-img">
+                <div class="collection-overlay">
+                    <h3 class="collection-name">STREETWEAR</h3>
+                    <p>Urban styles for the modern GenZ</p>
+                </div>
+            </div>
+            <div class="collection-item">
+                <img src="/Screenshot_20260115-171002_Instagram.jpg" alt="Minimalist Collection" class="collection-img">
+                <div class="collection-overlay">
+                    <h3 class="collection-name">MINIMALIST</h3>
+                    <p>Clean, simple, and sophisticated</p>
+                </div>
+            </div>
+            <div class="collection-item">
+                <img src="/Screenshot_20260115-171014_Instagram.jpg" alt="Retro" class="collection-img">
+                <div class="collection-overlay">
+                    <h3 class="collection-name">🔥</h3>
+                    <p>...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <h2 class="section-title">ABOUT F3</h2>
+        <div class="about-content">
+            <p>Born in the vibrant coastal city of <span class="highlight">Mangalore</span>, F3 is a GenZ-focused clothing brand that blends streetwear aesthetics with classy sophistication. We believe fashion is an expression of individuality and creativity.</p>
+            <br>
+            <p>Our collections are curated for the bold, the expressive, and the trendsetters who aren't afraid to stand out. Each piece is designed with attention to detail, quality fabrics, and a touch of urban edge that defines the GenZ spirit.</p>
+            <br>
+            <p>At F3, we're not just selling clothes—we're promoting a culture of self-expression, confidence, and style that transcends boundaries.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3 class="footer-title">F3</h3>
+                <p>Mangalore's premier GenZ dressing destination. Redefining fashion with every collection.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-snapchat"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">Quick Links</h3>
+                <div class="footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#collections">Collections</a>
+                    <a href="#about">About Us</a>
+                    <a href="#">Store Locator</a>
+                    <a href="#">Size Guide</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">Contact Info</h3>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> , Mangalore, Karnataka</p>
+                    <p><i class="fas fa-phone"></i> </p>
+                    <p><i class="fas fa-envelope"></i> </p>
+                    <p><i class="fas fa-clock"></i></p>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 F3 Clothing Brand. All rights reserved. | Designed for GenZ by GenZ</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+        
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add video fallback for mobile (if needed)
+        const video = document.querySelector('video');
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        
+        if (isMobile) {
+            // For mobile devices, we ensure the video plays inline
+            video.setAttribute('playsinline', '');
+            video.setAttribute('muted', '');
+        }
+    </script>
+</body>
+</html>
